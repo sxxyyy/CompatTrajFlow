@@ -1,0 +1,32 @@
+FROM ubuntu:20.04
+
+ARG FMM_COMMIT=19ef34e1f57ff2f2484231aa0d01dfffea986ec1
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        git \
+        libboost-dev \
+        libboost-serialization-dev \
+        libbz2-dev \
+        libexpat1-dev \
+        libssl-dev \
+        software-properties-common \
+    && add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends gdal-bin libgdal-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/cyang-kth/fmm.git /fmm \
+    && cd /fmm \
+    && git checkout "${FMM_COMMIT}" \
+    && sed -i '/add_subdirectory(python)/d' CMakeLists.txt \
+    && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build build --parallel "$(nproc)" \
+    && cmake --install build \
+    && rm -rf /fmm/.git /fmm/build
+
+WORKDIR /fmm
+CMD ["/bin/bash"]

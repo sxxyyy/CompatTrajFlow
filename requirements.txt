@@ -1,0 +1,25 @@
+# Install a compatible PyTorch build separately if this CUDA build is unavailable.
+torch==2.13.0
+lightning==2.6.5
+torchmetrics==1.9.0
+numpy==2.5.1
+pandas==3.0.1
+scipy==1.18.0
+scikit-learn==1.9.0
+geopandas==1.1.3
+geopy==2.4.1
+networkx==3.6.1
+osmnx==2.1.0
+holidays==0.97
+shapely==2.1.2
+pyproj==3.7.2
+docker==7.1.0
+fastdtw==0.3.4
+rich==15.0.0
+tqdm==4.68.4
+wandb==0.28.1
+torch-geometric==2.7.0
+transformers==5.13.0
+peft==0.19.1
+openai==2.43.0
+requests==2.34.2
